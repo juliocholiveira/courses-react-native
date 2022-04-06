@@ -7,22 +7,34 @@ import {
   TextInput,
   Platform,
   FlatList,
+  Alert,
 } from 'react-native';
 import {Button} from '../components/Button';
 import {SkillCard} from '../components/SkillCard';
 
+interface SkillData {
+  id: string;
+  name: string;
+}
+
 export function Home() {
-  const [myskill, setMyskill] = useState();
-  const [myskills, setMyskills] = useState([]);
+  const [myskill, setMyskill] = useState('');
+  const [myskills, setMyskills] = useState<SkillData[]>([]);
   const [greeting, setGreeting] = useState('');
 
   const handleAddNewSkill = () => {
     if (myskill === '') {
-      alert('My skill can not be null');
+      Alert.alert('My skill can not be null');
       return;
     }
+
+    const data = {
+      id: String(new Date().getTime()),
+      name: myskill,
+    };
+
     //setMyskills([...myskills, myskill]);
-    setMyskills(oldState => [...oldState, myskill]);
+    setMyskills(oldState => [...oldState, data]);
     setMyskill('');
   };
 
@@ -52,8 +64,8 @@ export function Home() {
       <Text style={[styles.title, {marginTop: 50}]}>My Skill</Text>
       <FlatList
         data={myskills}
-        keyExtractor={item => item}
-        renderItem={({item}) => <SkillCard skill={item} />}
+        keyExtractor={item => item.id}
+        renderItem={({item}) => <SkillCard skill={item.name} />}
       />
     </SafeAreaView>
   );
