@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {
-  View,
   Text,
   SafeAreaView,
   StyleSheet,
@@ -24,7 +23,7 @@ export function Home() {
 
   const handleAddNewSkill = () => {
     if (myskill === '') {
-      Alert.alert('My skill can not be null');
+      Alert.alert('My skill can not be empty');
       return;
     }
 
@@ -37,6 +36,10 @@ export function Home() {
     setMyskills(oldState => [...oldState, data]);
     setMyskill('');
   };
+
+  function handleRemoveSkill(id: string) {
+    setMyskills(oldState => oldState.filter(skill => skill.id !== id));
+  }
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -60,12 +63,17 @@ export function Home() {
         value={myskill}
         onChangeText={setMyskill}
       />
-      <Button onPress={handleAddNewSkill} />
+      <Button onPress={handleAddNewSkill} title="Add" />
       <Text style={[styles.title, {marginTop: 50}]}>My Skill</Text>
       <FlatList
         data={myskills}
         keyExtractor={item => item.id}
-        renderItem={({item}) => <SkillCard skill={item.name} />}
+        renderItem={({item}) => (
+          <SkillCard
+            skill={item.name}
+            onPress={() => handleRemoveSkill(item.id)}
+          />
+        )}
       />
     </SafeAreaView>
   );
