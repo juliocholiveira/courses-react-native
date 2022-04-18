@@ -11,16 +11,34 @@ import {
   LastTransaction,
 } from "./styles";
 
-export function HightlightCard() {
+interface Props {
+  title: string;
+  amount: string;
+  lastTransaction: string;
+  type: "up" | "down" | "total";
+}
+
+export function HightlightCard({
+  title,
+  amount,
+  lastTransaction,
+  type,
+}: Props) {
+  const icon = {
+    up: "arrow-up-circle",
+    down: "arrow-down-circle",
+    total: "dollar-sign",
+  };
+
   return (
-    <Container>
-      <Header>
-        <Title>Entradas</Title>
-        <Icon name="arrow-up-circle"></Icon>
+    <Container type={type}>
+      <Header type={type}>
+        <Title type={type}>{title}</Title>
+        <Icon name={icon[type]} type={type}></Icon>
       </Header>
-      <Footer>
-        <Amount>R$ 17.000,00</Amount>
-        <LastTransaction>Última entrada dia 13 de abril</LastTransaction>
+      <Footer type={type}>
+        <Amount type={type}>{amount}</Amount>
+        <LastTransaction type={type}>{lastTransaction}</LastTransaction>
       </Footer>
     </Container>
   );
