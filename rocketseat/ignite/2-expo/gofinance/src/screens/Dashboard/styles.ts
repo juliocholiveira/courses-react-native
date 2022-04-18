@@ -20,7 +20,7 @@ export const Header = styled.View`
 export const UserWrapper = styled.View`
   width: 100%;
 
-  padding: 0 20px;
+  padding: 0 ${RFValue(20)}px;
   margin-top: ${getStatusBarHeight() + RFValue(28)}px;
 
   flex-direction: row;
@@ -39,7 +39,7 @@ export const Photo = styled.Image`
   border-radius: 8px;
 `;
 export const User = styled.View`
-  margin-left: 16px;
+  margin-left: ${RFValue(16)}px;
 `;
 export const UserGreeting = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
@@ -65,4 +65,18 @@ export const HightlightCards = styled.ScrollView.attrs({
 })`
   position: absolute;
   margin-top: ${RFPercentage(20)}px;
+`;
+
+export const TransactionCards = styled.View`
+  flex: 1%;
+  margin: 0 ${RFValue(20)}px;
+
+  margin-top: ${RFPercentage(12)}px;
+`;
+
+export const Title = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(20)}px;
+
+  margin-bottom: ${RFValue(16)}px; ;
 `;
