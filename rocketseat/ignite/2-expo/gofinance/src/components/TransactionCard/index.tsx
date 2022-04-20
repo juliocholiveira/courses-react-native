@@ -9,7 +9,8 @@ import {
   Date,
 } from "./styles";
 
-interface Props {
+export interface Props {
+  type: "positive" | "negative";
   title: string;
   amount: string;
   category: {
@@ -19,7 +20,7 @@ interface Props {
   date: string;
 }
 
-interface Data {
+export interface Data {
   data: Props;
 }
 
@@ -27,10 +28,13 @@ export function TransactionCard({ data }: Data) {
   return (
     <Container>
       <Title>{data.title}</Title>
-      <Amount>{data.amount}</Amount>
+      <Amount type={data.type}>
+        {data.type === "negative" && "- "}
+        {data.amount}
+      </Amount>
       <Footer>
         <Category>
-          <Icon name="dollar-sign" />
+          <Icon name={data.category.icon} />
           <CategoryName>{data.category.name}</CategoryName>
         </Category>
         <Date>{data.date}</Date>
