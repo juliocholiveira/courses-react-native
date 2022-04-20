@@ -74,6 +74,8 @@ export const TransactionCards = styled.View`
   margin-top: ${RFPercentage(12)}px;
 `;
 
+export const TransactionList = styled.FlatList``;
+
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(20)}px;
