@@ -9,7 +9,7 @@ import {
   Date,
 } from "./styles";
 
-export interface Props {
+export interface TransactionCardProps {
   type: "positive" | "negative";
   title: string;
   amount: string;
@@ -20,8 +20,8 @@ export interface Props {
   date: string;
 }
 
-export interface Data {
-  data: Props;
+interface Data {
+  data: TransactionCardProps;
 }
 
 export function TransactionCard({ data }: Data) {
