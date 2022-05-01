@@ -15,7 +15,24 @@ import { Button } from "../../Form/Button";
 
 import { categories } from "../../utils/categories";
 
-export function CategorySelectModal() {
+interface Category {
+  key: string;
+  name: string;
+}
+interface CategorySelectModalProps {
+  category: Category;
+  setCategory: (category: Category) => void;
+  handleCloseCategorySelectModal: () => void;
+}
+
+export function CategorySelectModal({
+  category,
+  setCategory,
+  handleCloseCategorySelectModal,
+}: CategorySelectModalProps) {
+  const handleSelectCategory = (categorySelected: Category) => {
+    setCategory(categorySelected);
+  };
   return (
     <Container>
       <Header>
@@ -25,7 +42,10 @@ export function CategorySelectModal() {
       <FlatList
         data={categories}
         renderItem={({ item }) => (
-          <Category>
+          <Category
+            onPress={() => handleSelectCategory(item)}
+            isActive={category.key === item.key}
+          >
             <CategoryIcon name={item.icon} />
             <CategoryTitle>{item.name}</CategoryTitle>
           </Category>
@@ -35,7 +55,7 @@ export function CategorySelectModal() {
       />
 
       <Footer>
-        <Button title="Selecionar" />
+        <Button title="Selecionar" onPress={handleCloseCategorySelectModal} />
       </Footer>
     </Container>
   );
