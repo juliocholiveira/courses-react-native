@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Modal } from "react-native";
+import { useForm } from "react-hook-form";
+
 import { Button } from "../../Form/Button";
 import { CategorySelect } from "../../Form/CategorySelect";
-import { Input } from "../../Form/Input";
+import { InputForm } from "../../Form/InputForm";
 import { TransactionTypeButton } from "../../Form/TransactionTypeButton";
 import { CategorySelectModal } from "../CategorySelectModal";
 import {
@@ -14,17 +16,26 @@ import {
   TransactionTypes,
 } from "./styles";
 
-type Type = null | "up" | "down";
+type Type = null | "up" | "down" | null;
+
+type FormData = {
+  name: string;
+  amount: string;
+};
 
 export function Register() {
+  const { control, handleSubmit } = useForm();
+
   const [active, setActive] = useState<Type>();
   const [openModal, setOpenModal] = useState(false);
+  const [transactionType, setTransactionType] = useState<Type>();
   const [category, setCategory] = useState({
     key: "categoria",
     name: "categoria",
   });
 
   const handleTransactionTypeSelect = (type: Type) => {
+    setTransactionType(type);
     setActive(type);
   };
 
@@ -36,6 +47,16 @@ export function Register() {
     setOpenModal(false);
   };
 
+  const handleRegister = handleSubmit((data) => {
+    const dataForm = {
+      name: data.name,
+      amount: data.amount,
+      transactionType,
+      category: category.key,
+    };
+    console.log(dataForm);
+  });
+
   return (
     <Container>
       <Header>
@@ -43,8 +64,8 @@ export function Register() {
       </Header>
       <Form>
         <Fields>
-          <Input placeholder="Nome" />
-          <Input placeholder="Preço" />
+          <InputForm control={control} name="name" placeholder="Nome" />
+          <InputForm control={control} name="amount" placeholder="Preço" />
           <TransactionTypes>
             <TransactionTypeButton
               type="up"
@@ -62,7 +83,7 @@ export function Register() {
             onPress={handleOpenCategorySelectModal}
           />
         </Fields>
-        <Button title="Entrar" />
+        <Button title="Enviar" onPress={handleRegister} />
       </Form>
 
       <Modal visible={openModal}>
